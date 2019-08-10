@@ -561,3 +561,133 @@ FALLBACK:
         - flow-shrink:整数   默认为1，定义收缩比例  比例值计算：flex-shrink/所有兄弟子元素的flex-shrink
         - flex:  指定弹性子元素如何分配空间 计算方式：当前子元素flex值/所有子元素flex值和
         - order:  设置弹性盒子的子元素排列顺序,数值越小，越靠前,可以为负数
+
+## Canvas
+- 设置Canvas尺寸(不能使用样式去设置尺寸)
+```html
+    <canvas width="600px" height="300px"></canvas>
+```
+- 线条出现模糊的原因是，线条的默认宽度为1px，但对齐的点是线的中心位置，会把1px分为上下各0.5px，但1px是最小单位，所以0.5px会变的模糊，
+- 解决方法，移动0.5px
+```js
+    // 2.2准备画图工具
+    // 获取上下文(绘制工具箱)
+    // canvas 暂时没有3d  webGl可绘制3d效果
+    var myCanvas = document.querySelector('canvas')
+    var ctx = myCanvas.getContent('2d')
+
+    // 3.1 移动画笔
+    ctx.moveTo(100,100)
+    // 3.2 绘制直线
+    ctx.lineTo(200,100)    // 绘制路径（看不见）
+    // 3.3 描边
+    // 描边样式
+    ctx.strokeStyle = 'blue'
+    // 设置线条的宽度
+    ctx.lineWidth = 10
+    // 默认
+    ctx.stroke()
+```
+
+- 画多条线，解决多条线只有一种样式的方法
+    - .beginPath() 开启新路径
+```js
+    var myCanvas = document.querySelector('canvas')
+    var ctx = myCanvas.getContext('2d') 
+
+    ctx.moveTo(100,100)
+    ctx.lineTo(200,100)     
+    ctx.strokeStyle = 'red'
+    ctx.lineWidth = 10
+    ctx.stroke()
+
+    ctx.beginPath()     // 开启新路径   
+    ctx.moveTo(100,200.5)
+    ctx.lineTo(200,200.5)   
+    ctx.strokeStyle = 'black'
+    ctx.lineWidth = 10
+    ctx.stroke()
+
+```
+- .stroke()     描边
+    - .strokeStyle = 'red' 描边样式
+- .fill()   填充
+    - .fullStyle = 'red'  填充颜色
+- .beginPath()    开启新路径   
+- .closePath()     关闭路径(自动闭合)
+- .lineCap = butt(默认)/round(圆形)/square(方形)  线末端类型
+- .linejoin = miter(默认)/round(圆形)/square(方形)  相交线拐点类型
+- .setLineDash([,])     设置虚线排列方式
+- .rect(x,y,宽,高)  矩形路径
+- .strokeRect(x,y,宽,高)   描边矩形（默认会有beginPath）
+- .fillRect(x,y,宽,高)  填充矩形（默认会有beginPath）
+- .createLinearGradient(x0,y0,x1,y1)  创建渐变方案，这里的渐变方案是有长度的，x0y0是起点,x1y1是渐变终点
+    - .addColorStop(0,'pink') 设置颜色
+```js
+var jb = ctx.createLinearGradient(100,100,200,150)
+jb.addColorStop(0,'pink')
+jb.addColorStop(1,'red')
+ctx.fillStyle = jb
+```
+- .clearRect(x,y,宽,高)  清除矩形区域
+
+- 非零环绕填充规则
+判断一个区域内多块区域是否会被一起填充，即从判断的位置，拉出一条线，与之相交的轨迹，若轨迹顺时针相交 +1，逆时针 -1，若总和非零 则填充
+```js
+    ctx.moveTo(150,150)
+    ctx.lineTo(150,250)
+    ctx.lineTo(250,250)
+    ctx.lineTo(250,150)
+    ctx.closePath()
+
+    ctx.moveTo(100,100)
+    ctx.lineTo(300,100)
+    ctx.lineTo(300,300)
+    ctx.lineTo(100,300)
+    ctx.closePath()
+
+    ctx.fill()
+```
+
+- .arc(x圆心,y圆心,r半径,startAngle 起始位置(Math.pi),endAngle 结束位置(Math.pi),direction 绘制方向(默认顺时针false，逆时针为true))
+```js
+ var myCanvas = document.querySelector('canvas')
+var ctx = myCanvas.getContext('2d')
+
+// 曲线的绘制，线是由点构成的
+for(var i=1;i<600;i++){
+    var x = i
+    var y = 50*Math.sin(x/10)+100
+    ctx.lineTo(x,y)
+}
+ctx.stroke()
+ctx.beginPath()
+
+// 绘制圆弧
+ctx.arc(150,150,150,Math.PI/2,Math.PI,true)
+ctx.stroke()
+```
+
+- .strokeText(文本,x,y)  绘制文本(起点位置在文本的左下角)
+- .fillText(文本,x,y)   填充文本
+- .font = '20px 微软雅黑'  设置字体尺寸（注意顺序）
+- .textAlign = 'center'  设置对齐方式
+    - left 默认 起始坐标在左边
+    - center  中间对齐  起始坐标在中间 
+    - right  起始坐标在右边
+- .textBaseline = 'top'  设置基线的位置
+    - top       顶部
+    - bottom    底部
+    - middle    居中
+- .measureText(文本).width  获取文本宽度
+
+- .drawImage(image,x,y) 绘制图片 
+- .drawImage(image,x,y,w,h) w,h主要是缩放
+- .drawImage(image,x,y,w,h) 
+- .drawImage(image,图片上x,图片上y,图上截w,图上裁h,x,y,w,h)
+- .translate(x,y)  移动坐标原点（参照原位置）
+- .scale(0.5,0.5)   缩放坐标 
+- .rotate(Math.PI/4)    旋转坐标
+
+
+
