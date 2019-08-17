@@ -96,4 +96,4 @@ BFC(block formatting context) 就是 块格式化上下文，它是一个独立�
 - GFC 网络布局格式化上下文 
 - FFC 自适应格式化上下文FFC，使用display:flex 或 inline-flex 的元素就会生成自适应容器，但只有谷歌和火狐支持，在自适应容器下，每一个元素都是一个伸缩项目伸缩项目可以任意个数，且容器外和容器内不受影响。
 
-[答案参考](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/122)
+[答案参考](https://github.com/Advanced-Frontend/Daily-Interview-Question/issues/122) 
