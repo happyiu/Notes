@@ -39,3 +39,36 @@
 3. 还不懂
 
 [参考文章](https://muyiy.vip/question/js/3.html)
+
+## **`下面的代码打印什么内容，为什么？`**
+```js
+var b = 10
+(function b(){
+    b = 20 
+    console.log(b)
+})()
+```
+
+### `我的回答`
+额，这一题的话，打印的结果是 10 ？
+
+### `答案理解`
+打印 Function b 的函数体
+
+严格模式下会看到错误：Uncaught TypeError: Assignment to constant variable
+
+- 首先理解： IIFE（立即调用函数表达式）
+    - IIFE主要包括两部分：第一部分是包围在 圆括号运算符 () 里的一个匿名函数，这个匿名函数具有独立的词法作用域
+    - 第二部分再一次使用 () 创建了一个立即执行函数表达式，javascript将直接执行函数
+    - IIFE函数无法进行赋值，所以 相当于 const 常量
+    - 非匿名自执行函数的函数名只读
+- 分析代码
+    ```js
+    (function b(){
+        // 首先 会在内部作用域查找b的变量，此时会找到 function b，但由于function b 是IIEF，无法赋值，所以赋值失败
+        b = 20
+        // 此时 变量 b仍是 一个 函数
+        console.log(b)  // 打印的是 函数 function b 的函数体
+
+    })()
+    ```
