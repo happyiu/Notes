@@ -71,4 +71,4 @@ var b = 10
         console.log(b)  // 打印的是 函数 function b 的函数体
 
     })() 
-    ```
+    ``` 
