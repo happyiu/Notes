@@ -69,6 +69,7 @@ var b = 10
         b = 20
         // 此时 变量 b仍是 一个 函数
         console.log(b)  // 打印的是 函数 function b 的函数体
-
+ 
     })() 
     ``` 
+  
