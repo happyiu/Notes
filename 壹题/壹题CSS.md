@@ -15,7 +15,7 @@ BFC(block formatting context) 就是 块格式化上下文，它是一个独立�
 
 特性：让处在BFC内部的元素与外部隔离，使内部元素的定位不会互相影响，使BFC内部浮动元素不会乱跑，和浮动元素产生边界，同一个BFC中，垂直外边距会重叠，html根元素就具体BFC的特性
 
-创建BFC的方法：
+创建BFC的方法： 
 - html 根元素
 - float 浮动(float不为none)
 - 绝对定位(position为absolute或fixed)
