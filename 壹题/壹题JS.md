@@ -72,4 +72,46 @@ var b = 10
  
     })()  
     ```   
+
+
+## **`ES6 代码转为 ES5代码实现的思路`**
   
+### `我的回答`
+解析 转化
+
+### `答案理解`
+1. 解析：解析代码字符串，生成AST
+2. 转化：按一定的规则转化，修改AST
+3. 生成：将修改后的AST转化成普通代码
+
+
+## **`为什么普通 for 循环的性能远远高于 forEach 的性能，请解释其中的原因`**
+  
+### `我的回答`
+额，不知道
+
+### `答案理解`
+在node环境中代码测试
+```js
+let arr = new Array(100000)
+
+console.time('for')
+for(let i=0,len=arr.length;i<len;i++){
+
+}
+console.timeEnd('for')
+
+console.time('forEach')
+arr.forEach(item=>{
+    
+})
+console.timeEnd('forEach')
+```
+
+- 在10万级别下 forEach 性能是 for 的十倍
+- 在100万级别下 forEach 和 for性能一致
+- 在1000万级别上，forEach 性能远低于 for
+
+原因：for循环没有任何额外的函数调用栈和上下文，而forEach不是普通的for循环语法糖，还有许多要素需要考虑，所以在数据量大的时候，forEach的性能不如for
+
+
